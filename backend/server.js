@@ -1,9 +1,15 @@
 const express = require("express");
 const notes = require("./data/notes");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 dotenv.config();
+connectDB();
+
+console.log(`MONGO_URI: ${process.env.MONGO_URI}`);
+console.log(`PORT: ${process.env.PORT}`);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -13,10 +19,11 @@ app.get("/api/notes", (req, res) => {
   res.json(notes);
 });
 
-app.get("/api/notes/:id", (req, res) => {
-  const note = notes.find((n) => n._id === req.params.id);
-  res.send(note);
-});
+app.use("/api/users", userRoutes);
+// app.get("/api/notes/:id", (req, res) => {
+//   const note = notes.find((n) => n._id === req.params.id);
+//   res.send(note);
+// });
 
 // app.post("/notes/bakchodi", (req, res) => {
 //   const newNote = req.body;
