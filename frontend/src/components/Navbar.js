@@ -88,9 +88,11 @@ const Navbar = ({ userInfo, setSearch, logoutHandler }) => {
                 </MenuItem>
               </Menu>
             </>
-
             <Button color="inherit" href="/login">
               Login
+            </Button>{" "}
+            <Button color="inherit" href="/register">
+              Register
             </Button>
           </div>
         </Toolbar>

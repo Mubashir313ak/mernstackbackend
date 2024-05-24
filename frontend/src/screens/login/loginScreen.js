@@ -11,8 +11,8 @@ import {
   Grid,
 } from "@mui/material";
 // import { makeStyles } from "@mui/styles";
-// import Loading from "../../components/Loading";
-// import ErrorMessage from "../../components/ErrorMessage";
+import Loading from "../../components/loading";
+import ErrorMessage from "../../components/error";
 // import MainScreen from "../../components/MainScreen";
 import { login } from "../../redux/actions/userAction";
 function LoginScreen({ history }) {

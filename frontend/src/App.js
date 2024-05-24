@@ -8,6 +8,7 @@ import { Container } from "@mui/material";
 import Hero from "./screens/landing-page";
 import MyNotes from "./screens/mynotes";
 import LoginScreen from "./screens/login/loginScreen";
+import RegisterScreen from "./screens/register/registerScreen";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -22,7 +23,12 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginScreen />} />
         </Routes>
-        <MyNotes />
+        <Routes>
+          <Route path="/register" element={<RegisterScreen />} />
+        </Routes>
+        <Routes>
+          <Route path="/mynote" element={<MyNotes />} />
+        </Routes>
       </Container>
       <Footer />
     </Router>
