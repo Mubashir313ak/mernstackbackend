@@ -4,11 +4,13 @@ import { thunk } from "redux-thunk";
 import {
   userLoginReducer,
   userRegisterReducer,
+  userUpdateReducer,
 } from "./reducers.js/userReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userUpdate: userUpdateReducer,
 });
 
 const initialState = {};

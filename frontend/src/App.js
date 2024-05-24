@@ -9,6 +9,9 @@ import Hero from "./screens/landing-page";
 import MyNotes from "./screens/mynotes";
 import LoginScreen from "./screens/login/loginScreen";
 import RegisterScreen from "./screens/register/registerScreen";
+import ProfileScreen from "./screens/profile/profileEditScreen";
+// import SingleNote from "./screens/singlenote/singleNote";
+// import CreateNote from "./screens/singlenote/createnote";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -29,6 +32,15 @@ function App() {
         <Routes>
           <Route path="/mynote" element={<MyNotes />} />
         </Routes>
+        <Routes>
+          <Route path="/profile" element={<ProfileScreen />} />
+        </Routes>
+        {/* <Routes>
+          <Route path="/note/:id" element={<SingleNote />} />
+        </Routes>
+        <Routes>
+          <Route path="/create-note" element={<CreateNote />} />
+        </Routes> */}
       </Container>
       <Footer />
     </Router>
