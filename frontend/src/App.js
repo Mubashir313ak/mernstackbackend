@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { Container } from "@mui/material";
 import Hero from "./screens/landing-page";
 import MyNotes from "./screens/mynotes";
+import LoginScreen from "./screens/login/loginScreen";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -17,6 +18,9 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Hero />} />
+        </Routes>
+        <Routes>
+          <Route path="/login" element={<LoginScreen />} />
         </Routes>
         <MyNotes />
       </Container>
