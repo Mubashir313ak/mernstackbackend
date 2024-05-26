@@ -10,6 +10,10 @@ import {
   CircularProgress,
   Grid,
 } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // import { makeStyles } from "@mui/styles";
 import Loading from "../../components/loading";
 import ErrorMessage from "../../components/error";
@@ -18,7 +22,7 @@ import { login } from "../../redux/actions/userAction";
 function LoginScreen({ history }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -26,13 +30,20 @@ function LoginScreen({ history }) {
 
   useEffect(() => {
     if (userInfo) {
-      history.push("/mynotes");
+      window.location.href = "/mynote";
     }
-  }, [history, userInfo]);
+  }, [userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
+  };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -48,10 +59,10 @@ function LoginScreen({ history }) {
       }}
     >
       <Typography component="h1" variant="h5">
-        Logged
+        Logg In
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
-      {loading && <CircularProgress />}
+      {/* {loading && <CircularProgress />} */}
       <form
         onSubmit={submitHandler}
         style={{ width: "100%", maxWidth: "400px", marginTop: "8px" }}
@@ -77,12 +88,26 @@ function LoginScreen({ history }) {
           fullWidth
           name="password"
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="password"
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           sx={{ mb: 2 }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <Button
           type="submit"

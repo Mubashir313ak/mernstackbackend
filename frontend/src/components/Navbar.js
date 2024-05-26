@@ -2,17 +2,26 @@ import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-// import MenuIcon from "@mui/icons-material/Menu";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-// import { IconButton } from "@mui/material";
 import Iconify from "./iconify/iconify";
-const Navbar = ({ userInfo, setSearch, logoutHandler }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/actions/userAction";
+import { Menu, MenuItem } from "@mui/material";
+
+const Navbar = ({ setSearch }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const dispatch = useDispatch(); // Corrected line
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    window.location.href = "/login";
+  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,19 +54,9 @@ const Navbar = ({ userInfo, setSearch, logoutHandler }) => {
               <Button color="inherit" href="/mynote">
                 My Notes
               </Button>
-              {/* <IconButton
-                  edge="end"
-                  color="inherit"
-                  aria-label="menu"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                >
-                  <MenuIcon />
-                </IconButton> */}
               <Iconify
                 onClick={handleMenu}
-                icon="solar:bell-bing-bold-duotone"
+                icon="iconamoon:profile-fill"
                 width={24}
               />
               <Menu
@@ -78,14 +77,7 @@ const Navbar = ({ userInfo, setSearch, logoutHandler }) => {
                 <MenuItem onClick={handleClose} component="a" href="/profile">
                   My Profile
                 </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    logoutHandler();
-                  }}
-                >
-                  Logout
-                </MenuItem>
+                <MenuItem onClick={logoutHandler}>Logout</MenuItem>
               </Menu>
             </>
             <Button color="inherit" href="/login">

@@ -10,12 +10,17 @@ import {
   Box,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { Link as RouterLink } from "react-router-dom";
 import Loading from "../../components/loading";
 import ErrorMessage from "../../components/error";
 import { register } from "../../redux/actions/userAction";
 import MainScreen from "../../components/MainScreen";
-function RegisterScreen({ history }) {
+function RegisterScreen() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState(
@@ -60,11 +65,11 @@ function RegisterScreen({ history }) {
     }
   };
 
-  useEffect(() => {
-    if (userInfo) {
-      history.push("/");
-    }
-  }, [history, userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     navigate("/");
+  //   }
+  // }, [navigate, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
