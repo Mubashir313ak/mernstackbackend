@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   Container,
   TextField,
@@ -8,6 +10,8 @@ import {
   Grid,
   Link,
   Box,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // import { useHistory } from "react-router-dom";
@@ -30,6 +34,8 @@ function RegisterScreen() {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showconfirmPassword, setShowconfirmPassword] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -65,11 +71,11 @@ function RegisterScreen() {
     }
   };
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate("/");
-  //   }
-  // }, [navigate, userInfo]);
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -79,6 +85,20 @@ function RegisterScreen() {
     } else dispatch(register(name, email, password, pic));
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowconfirmPassword = () => {
+    setShowconfirmPassword(!showPassword);
+  };
+
+  const handleMouseDownconfirmPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <MainScreen title="REGISTER">
       <Container
@@ -131,12 +151,26 @@ function RegisterScreen() {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               sx={{ mb: 2 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant="outlined"
@@ -145,12 +179,26 @@ function RegisterScreen() {
               fullWidth
               name="confirmpassword"
               label="Confirm Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="confirmpassword"
               autoComplete="current-password"
               value={confirmpassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               sx={{ mb: 2 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowconfirmPassword}
+                      onMouseDown={handleMouseDownconfirmPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             {picMessage && (
               <ErrorMessage variant="danger">{picMessage}</ErrorMessage>

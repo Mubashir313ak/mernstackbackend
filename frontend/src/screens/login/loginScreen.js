@@ -29,7 +29,7 @@ function LoginScreen({ history }) {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if (userInfo) {
+    if (!userInfo) {
       window.location.href = "/mynote";
     }
   }, [userInfo]);
