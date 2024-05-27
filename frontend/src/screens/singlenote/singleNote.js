@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import MainScreen from "../../components/MainScreen";
 import axios from "axios";
 import {
@@ -14,11 +15,16 @@ import {
   CardActions,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteNoteAction, updateNoteAction } from "../../actions/notesActions";
-import ErrorMessage from "../../components/ErrorMessage";
 import ReactMarkdown from "react-markdown";
+import {
+  deleteNoteAction,
+  updateNoteAction,
+} from "../../redux/actions/notesActions";
+import ErrorMessage from "../../components/error";
+function SingleNote() {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-function SingleNote({ match, history }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
@@ -35,13 +41,13 @@ function SingleNote({ match, history }) {
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
-      history.push("/mynotes");
+      navigate("/mynote");
     }
   };
 
   useEffect(() => {
     const fetching = async () => {
-      const { data } = await axios.get(`/api/notes/${match.params.id}`);
+      const { data } = await axios.get(`/api/notes/${id}`);
 
       setTitle(data.title);
       setContent(data.content);
@@ -50,7 +56,7 @@ function SingleNote({ match, history }) {
     };
 
     fetching();
-  }, [match.params.id, date]);
+  }, [id, date]);
 
   const resetHandler = () => {
     setTitle("");
@@ -61,9 +67,9 @@ function SingleNote({ match, history }) {
   const updateHandler = (e) => {
     e.preventDefault();
     if (!title || !content || !category) return;
-    dispatch(updateNoteAction(match.params.id, title, content, category));
+    dispatch(updateNoteAction(id, title, content, category));
     resetHandler();
-    history.push("/mynotes");
+    navigate("/mynote");
   };
 
   return (
@@ -134,7 +140,7 @@ function SingleNote({ match, history }) {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => deleteHandler(match.params.id)}
+                  onClick={() => deleteHandler(id)}
                 >
                   Delete Note
                 </Button>

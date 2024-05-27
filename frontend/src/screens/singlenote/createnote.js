@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Updated import
 import MainScreen from "../../components/MainScreen";
 import {
   Container,
@@ -13,22 +14,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createNoteAction } from "../../actions/notesActions";
-import Loading from "../../components/Loading";
-import ErrorMessage from "../../components/ErrorMessage";
 import ReactMarkdown from "react-markdown";
+import { createNoteAction } from "../../redux/actions/notesActions";
 
-function CreateNote({ history }) {
+function CreateNote() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Use useNavigate hook
 
   const noteCreate = useSelector((state) => state.noteCreate);
-  const { loading, error, note } = noteCreate;
-
-  console.log(note);
+  const { loading, note } = noteCreate;
 
   const resetHandler = () => {
     setTitle("");
@@ -41,7 +39,7 @@ function CreateNote({ history }) {
     if (!title || !content || !category) return;
     dispatch(createNoteAction(title, content, category));
     resetHandler();
-    history.push("/mynotes");
+    navigate("/mynote"); // Use navigate for navigation
   };
 
   useEffect(() => {}, []);
@@ -53,7 +51,6 @@ function CreateNote({ history }) {
           <CardHeader title="Create a new Note" />
           <CardContent>
             <Box component="form" onSubmit={submitHandler} sx={{ mt: 2 }}>
-              {error && <ErrorMessage severity="error">{error}</ErrorMessage>}
               <TextField
                 variant="outlined"
                 margin="normal"

@@ -9,29 +9,27 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 //o import MainScreen from "./MainScreen";
-import notes from "../components/data/notes";
+import { listNotes } from "../redux/actions/notesActions";
+import { useDispatch, useSelector } from "react-redux";
 // import ReactMarkdown from "react-markdown";
 
 const MyNotes = () => {
-  const [mynotes, setmynotes] = useState([]);
-  const fetchNotes = async () => {
-    try {
-      const response = await axios.get("/api/notes");
-      setmynotes(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching notes:", error);
-    }
-  };
+  const dispatch = useDispatch();
+  const notesList = useSelector((state) => state.notesList);
+  const { notes } = notesList;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    dispatch(listNotes());
+    if (!userInfo) {
+      window.location.href = "/";
+    }
+  }, [dispatch, userInfo]);
   return (
     <>
-      <Link to="/createnote" style={{ textDecoration: "none" }}>
+      <Link to="/create-note" style={{ textDecoration: "none" }}>
         <Button
           style={{ marginLeft: 10, marginBottom: 6 }}
           variant="contained"

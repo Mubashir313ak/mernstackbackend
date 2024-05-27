@@ -14,6 +14,8 @@ import ProfileScreen from "./screens/profile/profileEditScreen";
 // import SingleNote from "./screens/singlenote/singleNote";
 // import CreateNote from "./screens/singlenote/createnote";
 import ProtectedRoute from "./components/protectedRoute";
+import CreateNote from "./screens/singlenote/createnote";
+import SingleNote from "./screens/singlenote/singleNote";
 function App() {
   const [search, setSearch] = useState("");
 
@@ -33,8 +35,14 @@ function App() {
             path="/profile"
             element={<ProtectedRoute element={<ProfileScreen />} />}
           />
-          {/* <Route path="/note/:id" element={<ProtectedRoute element={<SingleNote />} />} />
-          <Route path="/create-note" element={<ProtectedRoute element={<CreateNote />} />} /> */}
+          <Route
+            path="/note/:id"
+            element={<ProtectedRoute element={<SingleNote />} />}
+          />
+          <Route
+            path="/create-note"
+            element={<ProtectedRoute element={<CreateNote />} />}
+          />
         </Routes>
       </Container>
       <Footer />
